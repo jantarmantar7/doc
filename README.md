@@ -228,6 +228,29 @@ Container instance counts for clusters, services and tasks
 We can also Integrate with CloudWatch Logs Insights to dynamically query and analyze container application and performance logs
  
  
+ 
+ 
+How can we achieve faster cold start times for java applications for lambdas ?
+
+A cold start happens when you execute an inactive function. The delay comes from your cloud provider provisioning your selected runtime container and then running your function.Cold starts can be a killer to Lambda performance, especially if you’re developing a customer-facing application that needs to operate in real time. They happen because if your Lambda is not already running, AWS needs to deploy your code and spin up a new container before the request can begin. This can mean a request takes much longer to execute, and only when the container is ready can your lambda start running.
+
+We cannot entirely avoid cold starts, but you can reduce their duration and frequency by using the following tips. 
+
+Reduce the size of your function's artifact - Use a different package for each Lambda function and only include the code necessary for that function. Only include the libraries necessary for each Lambda function in its artifact.
+
+Prefer dynamically typed languages—use languages like Node.js or Python instead of statically typed programming languages like C# and Java. Dynamically typed languages check what you type during run-time as opposed to compile-time in statically typed languages.
+
+Avoid using Lambdas in Virtual Private Cloud (VPC)—A VPC is an isolated, secure, private cloud hosted on a public cloud. VPC isolates your computing resources from each other, which can increase the delay time and cause cold starts.
+
+Avoid HTTPS calls inside your lambda—SSL handshake and other security-related calls can create cold starts since they are limited by CPU power.
+
+Avoid dependencies—Java dependencies that scan classpath like Spring can cause cold starts. In addition, loading Java classes can take some time and may lead to a cold start.
+
+Increase the memory on AWS Lambda to get more CPU capacity—this can make the execution time of Lambda faster, and also reduce costs compared to lower memory settings.
+
+Reduce the number of packages - We’ve seen that the biggest impact on AWS Lambda cold start times is not the size of the package but the initialization time when the package is actually loaded for the first time.The more packages you use, the longer it will take for the container to load them. 
+
+ 
 
 
 
